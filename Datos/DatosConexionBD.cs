@@ -10,7 +10,8 @@ namespace Datos
         public SqlConnection conexion;
 
         // Cadena de conexión - Actualiza "YourServerName" y "YourDatabaseName"
-        public string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=IventarioTiendaElectronica;Trusted_Connection=True;";
+        public string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;";
+        //"Server=(localdb)\\MSSQLLocalDB;Database=InventarioTiendaElectronica;Trusted_Connection=True"
 
         // Constructor
         public DatosConexionBD()
