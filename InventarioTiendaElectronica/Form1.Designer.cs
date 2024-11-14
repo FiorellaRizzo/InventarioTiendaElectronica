@@ -49,6 +49,8 @@
 			this.textBuscar = new System.Windows.Forms.TextBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.label7 = new System.Windows.Forms.Label();
+			this.textProveedor = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -95,6 +97,8 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.textProveedor);
+			this.groupBox1.Controls.Add(this.label7);
 			this.groupBox1.Controls.Add(this.textCategoria);
 			this.groupBox1.Controls.Add(this.textNombre);
 			this.groupBox1.Controls.Add(this.textStock);
@@ -108,7 +112,7 @@
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox1.Location = new System.Drawing.Point(15, 26);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(543, 123);
+			this.groupBox1.Size = new System.Drawing.Size(653, 123);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Datos";
@@ -120,7 +124,7 @@
 			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox2.Location = new System.Drawing.Point(15, 155);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(543, 57);
+			this.groupBox2.Size = new System.Drawing.Size(653, 57);
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Buscar";
@@ -229,7 +233,7 @@
 			this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox3.Location = new System.Drawing.Point(17, 214);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(540, 196);
+			this.groupBox3.Size = new System.Drawing.Size(651, 196);
 			this.groupBox3.TabIndex = 3;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Listar";
@@ -244,6 +248,22 @@
 			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.Size = new System.Drawing.Size(502, 156);
 			this.dataGridView1.TabIndex = 0;
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(412, 81);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(81, 20);
+			this.label7.TabIndex = 10;
+			this.label7.Text = "Proveedor";
+			// 
+			// textProveedor
+			// 
+			this.textProveedor.Location = new System.Drawing.Point(511, 75);
+			this.textProveedor.Name = "textProveedor";
+			this.textProveedor.Size = new System.Drawing.Size(115, 26);
+			this.textProveedor.TabIndex = 11;
 			// 
 			// Form1
 			// 
@@ -293,6 +313,8 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.TextBox textProveedor;
+		private System.Windows.Forms.Label label7;
 	}
 }
 
