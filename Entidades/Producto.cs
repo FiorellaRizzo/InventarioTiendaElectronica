@@ -7,107 +7,74 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-
     public class Producto
     {
         #region Atributos
-        private string Codigo;
-        private string Nombre;
-        private decimal Precio;
-        private int Stock;
-        private int CategoriaId;
-        private int ProveedorId;
+        private string codigo;
+        private string nombre;
+        private decimal precio;
+        private int stock;
+        private int categoriaId;
+        private int proveedorId;
         #endregion
 
         #region Propiedades
-
-        public string ProducCodigo
+        public string Codigo
         {
-            set { Codigo = value; }
-            get { return Codigo; }
-
+            get { return codigo; }
+            set { codigo = value; }
         }
 
-        public string ProducNombre
+        public string Nombre
         {
-            get { return Nombre; }
-            set { Nombre = value; }
+            get { return nombre; }
+            set { nombre = value; }
         }
 
-        public decimal ProducPrecio
+        public decimal Precio
         {
-            get { return Precio; }
-            set { Precio = value; }
+            get { return precio; }
+            set { precio = value; }
         }
 
-        public int ProducStock
+        public int Stock
         {
-            get { return Stock; }
-            set { Stock = value; }
+            get { return stock; }
+            set { stock = value; }
         }
 
-        public int ProducCategoriaId
+        public int CategoriaId
         {
-            get { return CategoriaId; }
-            set { CategoriaId = value; }
+            get { return categoriaId; }
+            set { categoriaId = value; }
         }
 
-        public int ProducProveedorId
+        public int ProveedorId
         {
-            get { return ProveedorId; }
-            set { ProveedorId = value; }
+            get { return proveedorId; }
+            set { proveedorId = value; }
         }
-
         #endregion
 
         #region Constructores
         // Constructor por defecto
-        public Producto()
-        {
-        }
+        public Producto() { }
 
         // Constructor con parámetros
-        public Producto(string Cod, string nombre, decimal precio, int stock, int categoriaId, int proveedorId)
+        public Producto(string codigo, string nombre, decimal precio, int stock, int categoriaId, int proveedorId)
         {
-
-            this.Codigo = Cod;
-            this.Nombre = nombre;
-            this.Precio = precio;
-            this.Stock = stock;
-            this.CategoriaId = categoriaId;
-            this.ProveedorId = proveedorId;
-
-        }
-        #endregion
-
-        #region Metodos
-        public void IngresarStock(int cantidad)
-        {
-            ProducStock += cantidad;
-        }
-
-        public bool RetirarStock(int cantidad)
-        {
-            if (cantidad > ProducStock)
-            {
-                return false;
-            }
-
-            ProducStock -= cantidad;
-            return true;
-        }
-
-        public void ActualizarProducto(string nombre, decimal precio, int stock, int categoriaId, int proveedorId)
-        {
-            ProducNombre = nombre;
-            ProducPrecio = precio;
-            ProducStock = stock;
-            ProducCategoriaId = categoriaId;
-            ProducProveedorId = proveedorId;
+            this.codigo = codigo;
+            this.nombre = nombre;
+            this.precio = precio;
+            this.stock = stock;
+            this.categoriaId = categoriaId;
+            this.proveedorId = proveedorId;
         }
         #endregion
     }
 }
+
+      
 
 
 
