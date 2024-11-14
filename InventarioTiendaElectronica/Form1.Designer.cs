@@ -173,6 +173,7 @@
 			// 
 			// textCodigo
 			// 
+			this.textCodigo.Enabled = false;
 			this.textCodigo.Location = new System.Drawing.Point(103, 22);
 			this.textCodigo.Name = "textCodigo";
 			this.textCodigo.Size = new System.Drawing.Size(100, 26);
