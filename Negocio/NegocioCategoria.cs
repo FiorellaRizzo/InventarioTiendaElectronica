@@ -6,12 +6,23 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Negocio
 {
     public class NegocioCategoria
+
     {
+
+
         DatosCategorias objDatosCategoria = new DatosCategorias();
+
+        public DataTable ListadoCategorias()
+        {
+            DatosCategorias datosCategoria = new DatosCategorias();
+            return datosCategoria.ListadoCategorias();
+        }
+
 
         // Método para Alta, Baja y Modificación de categorías
         public int AbmCategoria(string accion, Categoria objCategoria)
@@ -20,10 +31,12 @@ namespace Negocio
         }
 
         // Método para obtener el listado de categorías
-        public DataSet ListadoCategorias(string id)
+
+        public DataSet ListadoCategorias(string nombre)
         {
-            return objDatosCategoria.ListadoCategorias(id);
+            return objDatosCategoria.ListadoCategorias(nombre);
         }
+       
 
         // Método para eliminar una categoría por Id
         public bool EliminarCategoria(int id)
@@ -31,7 +44,7 @@ namespace Negocio
             try
             {
                 Categoria categoria = new Categoria();
-                categoria.CategCodigo = id;
+                categoria.CategoriaId = id;
                 int resultado = objDatosCategoria.AbmCategoria("Baja", categoria);
                 return resultado > 0;
             }
@@ -57,6 +70,9 @@ namespace Negocio
             return true;
         }
 
+      
+
+
         // Método para generar un reporte de todas las categorías
         public DataTable GenerarReporteCategorias()
         {
@@ -74,6 +90,10 @@ namespace Negocio
 
             return dtReporte;
         }
+
+        
+
+
     }
 
 }

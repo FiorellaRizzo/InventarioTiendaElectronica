@@ -8,7 +8,23 @@ namespace Datos
 
 
     public class DatosCategorias : DatosConexionBD
+    
     {
+        
+
+        public DataTable ListadoCategorias()
+        {
+            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;"))
+            {
+                string query = "SELECT Nombre FROM Categorias";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                return dt;
+            }
+        }
+
+
         // Método para Alta, Baja y Modificación de categorías
         public int AbmCategoria(string accion, Categoria objCategoria)
         {
@@ -32,7 +48,7 @@ namespace Datos
             // Configuración del comando SQL
             SqlCommand cmd = new SqlCommand(orden, conexion);
             cmd.Parameters.AddWithValue("@Nombre", objCategoria.CategNombre);
-            cmd.Parameters.AddWithValue("@Id", objCategoria.CategCodigo);
+            cmd.Parameters.AddWithValue("@Id", objCategoria.CategoriaId);
 
             try
             {
@@ -87,6 +103,9 @@ namespace Datos
 
             return ds;
         }
+
+        
+
     }
 
 }

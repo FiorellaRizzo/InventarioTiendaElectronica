@@ -9,6 +9,22 @@ namespace Datos
 
     public class DatosProveedores : DatosConexionBD
     {
+
+        public DataTable ObtenerProveedores()
+        {
+            DataTable dtProveedores = new DataTable();
+            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;"))
+            {
+                string query = "SELECT Id, Nombre FROM Proveedores";
+                SqlCommand cmd = new SqlCommand(query, conexion);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                conexion.Open();
+                da.Fill(dtProveedores);
+            }
+            return dtProveedores;
+        }
+
         // Método para Alta, Baja y Modificación de proveedores
         public int AbmProveedor(string accion, Proveedor objProveedor)
         {

@@ -12,10 +12,11 @@ namespace Entidades
         #region Atributos
         private string codigo;
         private string nombre;
-        private decimal precio;
+        private string categoria;
+        private string proveedor;
         private int stock;
-        private int categoriaId;
-        private int proveedorId;
+        public decimal precio;
+
         #endregion
 
         #region Propiedades
@@ -36,24 +37,25 @@ namespace Entidades
             get { return precio; }
             set { precio = value; }
         }
+        public string Categoria
+        {
+            get { return categoria; }
+            set { categoria = value; }
+        }
 
+        public string Proveedor
+        {
+            get { return proveedor; }
+            set { proveedor = value; }
+        }
         public int Stock
         {
             get { return stock; }
             set { stock = value; }
         }
 
-        public int CategoriaId
-        {
-            get { return categoriaId; }
-            set { categoriaId = value; }
-        }
-
-        public int ProveedorId
-        {
-            get { return proveedorId; }
-            set { proveedorId = value; }
-        }
+        
+        
         #endregion
 
         #region Constructores
@@ -61,14 +63,15 @@ namespace Entidades
         public Producto() { }
 
         // Constructor con parámetros
-        public Producto(string codigo, string nombre, decimal precio, int stock, int categoriaId, int proveedorId)
+        public Producto(string codigo, string nombre, decimal precio, string categoria, string proveedor, int stock)
         {
             this.codigo = codigo;
             this.nombre = nombre;
             this.precio = precio;
+            this.categoria = categoria;
+            this.proveedor = proveedor;
             this.stock = stock;
-            this.categoriaId = categoriaId;
-            this.proveedorId = proveedorId;
+           
         }
         #endregion
     }

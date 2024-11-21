@@ -9,10 +9,7 @@ using Entidades;
 
 namespace Negocio
 {
-    using System;
-    using System.Data;
-    using Datos;
-    using Entidades;
+ 
 
     public class NegocioProducto
     {
@@ -38,12 +35,19 @@ namespace Negocio
         }
 
         // Método para eliminar un producto por Codigo
-        public bool EliminarProducto(string codigo)
+        public bool EliminarProducto(string codigo, string nombre, int precio, int stock, string categoria, string proveedor)
         {
             try
             {
                 Producto producto = new Producto();
                 producto.Codigo = codigo;
+                producto.Nombre = nombre;
+                producto.Precio = precio;
+                producto.Stock = stock;
+                producto.Categoria = categoria;
+                producto.Proveedor = proveedor;
+
+
                 int resultado = objDatosProducto.AbmProducto("Baja", producto);
                 return resultado > 0;
             }
@@ -66,10 +70,17 @@ namespace Negocio
                 throw new ArgumentException("El nombre del producto no puede estar vacío.");
             }
 
-            if (producto.Precio <= 0)
+            if (string.IsNullOrWhiteSpace(producto.Categoria))
             {
-                throw new ArgumentException("El precio del producto debe ser mayor a cero.");
+                throw new ArgumentException("La categoria seleccionada no puede estar vacía.");
             }
+
+            if (string.IsNullOrWhiteSpace(producto.Proveedor))
+            {
+                throw new ArgumentException("El proveedor seleccionado no puede estar vacío.");
+            }
+
+          
 
             if (producto.Stock < 0)
             {

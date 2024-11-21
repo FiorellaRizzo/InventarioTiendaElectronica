@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entidades
+﻿namespace Entidades
 {
     public class Categoria
     {
         #region Atributos
-        private int Id;
-        private string Nombre;
+        private int Id; // Cambia "string" por un nombre válido
+        private string nombre;
         #endregion
 
         #region Propiedades
-
-        public int CategCodigo
+        public int CategoriaId
         {
             get { return Id; }
             set { Id = value; }
@@ -23,10 +16,9 @@ namespace Entidades
 
         public string CategNombre
         {
-            get { return Nombre; }
-            set { Nombre = value; }
+            get { return nombre; }
+            set { nombre = value; }
         }
-
         #endregion
 
         #region Constructores
@@ -36,14 +28,12 @@ namespace Entidades
         }
 
         // Constructor con parámetros
-        public Categoria(int id, string nombre)
+        public Categoria(int Id, string nombre)
         {
-            this.Id = id;
-            this.Nombre = nombre;
+            this.CategoriaId = Id; // Usar la propiedad en lugar de atributos directamente
+            this.CategNombre = nombre;
         }
         #endregion
-
-        
     }
-
 }
+

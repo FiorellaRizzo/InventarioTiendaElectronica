@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Entidades;
@@ -17,63 +18,17 @@ namespace Presentacion
         public InventarioTiendaElectronica()
         {
             InitializeComponent();
-            ConfigurarDataGridView();
-            LlenarComboBoxCategorias();
-            LlenarComboBoxProveedores();
-            LlenarDGV();
-
-            
 
         }
 
         private void InventarioTiendaElectronica_Load(object sender, EventArgs e)
         {
-
+            LlenarDGV(); // Carga los productos en el DataGridView al iniciar
+            CargarCategorias(); // Cargar los nombres de las categorías
+            CargarProveedores();  // Cargar los nombres de los proveedores
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        // Configura el DataGridView
-        private void ConfigurarDataGridView()
-        {
-            dataGridView1.ColumnCount = 6;
-            dataGridView1.Columns[0].HeaderText = "Código";
-            dataGridView1.Columns[1].HeaderText = "Nombre";
-            dataGridView1.Columns[2].HeaderText = "Precio";
-            dataGridView1.Columns[3].HeaderText = "Stock";
-            dataGridView1.Columns[4].HeaderText = "Categoría";
-            dataGridView1.Columns[5].HeaderText = "Proveedor";
-
-            dataGridView1.Columns[0].Width = 60;
-            dataGridView1.Columns[1].Width = 150;
-            dataGridView1.Columns[2].Width = 70;
-            dataGridView1.Columns[3].Width = 60;
-            dataGridView1.Columns[4].Width = 100;
-            dataGridView1.Columns[5].Width = 100;
-        }
-
-        // Llena el ComboBox de Categorías
-        private void LlenarComboBoxCategorias()
-        {
-            DataSet dsCategorias = objNegCategoria.ListadoCategorias("Todos");
-            cmbCategoria.DataSource = dsCategorias.Tables[0];
-            cmbCategoria.DisplayMember = "Nombre";
-            cmbCategoria.ValueMember = "Id";
-        }
-
-        // Llena el ComboBox de Proveedores
-        private void LlenarComboBoxProveedores()
-        {
-            DataSet dsProveedores = objNegProveedores.ListadoProveedores("Todos");
-            cmbProveedores.DataSource = dsProveedores.Tables[0];
-            cmbProveedores.DisplayMember = "Nombre";
-            cmbProveedores.ValueMember = "Id";
-        }
-
-        // Llena el DataGridView con los productos existentes
+        // Método para llenar el DataGridView con productos
         private void LlenarDGV()
         {
             dataGridView1.Rows.Clear();
@@ -88,76 +43,111 @@ namespace Presentacion
                         dr["Nombre"],
                         dr["Precio"],
                         dr["Stock"],
-                        dr["CategoriaId"],
-                        dr["ProveedorId"]
+                        dr["Categoria"], // Nombre de la categoría
+                        dr["Proveedor"]
                     );
                 }
             }
             else
             {
-                lblText.Text = "No hay productos cargados en el sistema";
+                lblText.Text = "No hay productos cargados en el sistema.";
             }
         }
 
-        // Método para cargar los datos de los TextBoxes al objeto Producto
-        private void TxtBox_a_Obj()
+        // Evento para manejar la selección de categoría en el ComboBox
+        private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            objEntProducto.Codigo = txtCodigo.Text;
-            objEntProducto.Nombre = txtNombre.Text;
-            objEntProducto.Precio = decimal.Parse(txtPrecio.Text);
-            objEntProducto.Stock = int.Parse(txtStock.Text);
-            objEntProducto.CategoriaId = (int)cmbCategoria.SelectedValue;
-            objEntProducto.ProveedorId = (int)cmbProveedores.SelectedValue;
+            if (cmbCategoria.SelectedValue != null)
+            {
+                // Cargar el nombre de la categoría seleccionada en el DataGridView
+                string categoriaSeleccionada = cmbCategoria.Text;
+
+                // Limpia el DataGridView y muestra solo la categoría seleccionada
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.Add("", "", "", "", categoriaSeleccionada, "");
+            }
         }
 
-        // Evento Click para agregar un producto
+        private void cmbProveedores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbCategoria.SelectedValue != null)
+            {
+                // Cargar el nombre de la categoría seleccionada en el DataGridView
+                string ProveedorSeleccionado = cmbCategoria.Text;
+
+                // Limpia el DataGridView y muestra solo la categoría seleccionada
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.Add("", "", "", "", ProveedorSeleccionado, "");
+            }
+        }
+
+
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            int nGrabados = -1;
-            TxtBox_a_Obj();
-            nGrabados = objNegProducto.AbmProducto("Alta", objEntProducto);
 
-            if (nGrabados == -1)
+            Producto producto = new Producto
             {
-                lblText.Text = "No se pudo grabar el producto en el sistema";
+                Codigo = txtCodigo.Text,
+                Nombre = txtNombre.Text,
+                Precio = decimal.Parse(txtPrecio.Text),
+                Stock = int.Parse(txtStock.Text),
+                Categoria = cmbCategoria.Text,  // Obtén el texto seleccionado
+                Proveedor = cmbProveedores.Text // Obtén el texto seleccionado
+            };
+
+
+            // Validación de campos obligatorios
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text) ||
+                string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtStock.Text) ||
+
+
+                cmbCategoria.SelectedIndex == -1 ||
+                cmbProveedores.SelectedIndex == -1)
+            {
+                lblText.Text = "Por favor, complete todos los campos obligatorios.";
+                return;
             }
-            else
-            {
-                lblText.Text = "Producto grabado con éxito";
-                LlenarDGV();
-                Limpiar();
-            }
-        }
 
-        // Evento CellClick del DataGridView para seleccionar un producto y cargar sus datos en los TextBoxes
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataSet ds = objNegProducto.ListadoProductos(dataGridView1.CurrentRow.Cells[0].Value.ToString());
 
-                if (ds.Tables[0].Rows.Count > 0)
+
+            try
+            {
+                // Asigna los valores de los controles al objeto Producto
+                objEntProducto.Codigo = txtCodigo.Text.Trim();
+                objEntProducto.Nombre = txtNombre.Text.Trim();
+                objEntProducto.Precio = int.Parse(txtPrecio.Text.Trim());
+                objEntProducto.Stock = int.Parse(txtStock.Text.Trim());
+                objEntProducto.Categoria = cmbCategoria.Text.Trim();
+                objEntProducto.Proveedor = cmbProveedores.Text.Trim();
+
+
+                // Llama a la capa de negocio para agregar el producto
+                int resultado = objNegProducto.AbmProducto("Alta", objEntProducto);
+
+                if (resultado > 0)
                 {
-                    Ds_a_TxtBox(ds);
-                    btnAgregar.Visible = false;
-                    lblText.Text = string.Empty;
+                    lblText.Text = "Producto agregado con éxito.";
+                    MessageBox.Show("Producto agregado correctamente.");
+                    LlenarDGV();  // Actualiza el DataGridView
+                    Limpiar();    // Limpia los campos de entrada
+                }
+                else
+                {
+                    lblText.Text = "Error al intentar agregar el producto.";
+                    MessageBox.Show("Error al agregar el producto.");
                 }
             }
+            catch (Exception ex)
+            {
+                lblText.Text = $"Error al guardar el producto: {ex.Message}";
+            }
+
+
         }
 
-        // Método para cargar los datos del DataSet en los TextBoxes
-        private void Ds_a_TxtBox(DataSet ds)
-        {
-            txtCodigo.Text = ds.Tables[0].Rows[0]["Codigo"].ToString();
-            txtNombre.Text = ds.Tables[0].Rows[0]["Nombre"].ToString();
-            txtPrecio.Text = ds.Tables[0].Rows[0]["Precio"].ToString();
-            txtStock.Text = ds.Tables[0].Rows[0]["Stock"].ToString();
-            cmbCategoria.SelectedValue = ds.Tables[0].Rows[0]["CategoriaId"];
-            cmbProveedores.SelectedValue = ds.Tables[0].Rows[0]["ProveedorId"];
-            txtCodigo.Enabled = false;
-        }
 
-        // Evento Click para modificar un producto
+
         private void btnModificar_Click(object sender, EventArgs e)
         {
             int nResultado = -1;
@@ -175,12 +165,13 @@ namespace Presentacion
             {
                 lblText.Text = "Error al intentar modificar el producto";
             }
+
         }
 
-       
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            bool nResultado = objNegProducto.EliminarProducto(txtCodigo.Text);
+
+            bool nResultado = objNegProducto.EliminarProducto(txtCodigo.Text, txtNombre.Text, int.Parse(txtPrecio.Text), int.Parse(txtStock.Text), cmbCategoria.Text, cmbProveedores.Text);
 
             if (nResultado)
             {
@@ -192,6 +183,22 @@ namespace Presentacion
             else
             {
                 lblText.Text = "Error al intentar eliminar el producto.";
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataSet ds = objNegProducto.ListadoProductos(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    Ds_a_TxtBox(ds);
+                    btnAgregar.Visible = false;
+                    lblText.Text = string.Empty;
+                }
+
             }
         }
 
@@ -207,7 +214,87 @@ namespace Presentacion
             btnAgregar.Visible = true;
             txtCodigo.Enabled = true;
         }
+
+        // Método para cargar los datos de los TextBoxes al objeto Producto
+        private void TxtBox_a_Obj()
+        {
+            objEntProducto.Codigo = txtCodigo.Text;
+            objEntProducto.Nombre = txtNombre.Text;
+            objEntProducto.Stock = int.Parse(txtStock.Text);
+            objEntProducto.Categoria = cmbCategoria.Text;
+            objEntProducto.Proveedor = cmbProveedores.Text;
+
+        }
+
+        // Método para cargar los datos del DataSet en los TextBoxes
+        private void Ds_a_TxtBox(DataSet ds)
+        {
+            txtCodigo.Text = ds.Tables[0].Rows[0]["Codigo"].ToString();
+            txtNombre.Text = ds.Tables[0].Rows[0]["Nombre"].ToString();
+            txtPrecio.Text = ds.Tables[0].Rows[0]["Precio"].ToString();
+            txtStock.Text = ds.Tables[0].Rows[0]["Stock"].ToString();
+
+            // Asignar valores al ComboBox de categoría y proveedores
+            if (ds.Tables[0].Rows[0]["Categoria"] != DBNull.Value)
+            {
+                cmbCategoria.SelectedValue = ds.Tables[0].Rows[0]["Categoria"].ToString(); // "Categoria" debe coincidir con la columna de tu DataSet
+            }
+
+            if (ds.Tables[0].Rows[0]["Proveedor"] != DBNull.Value)
+            {
+                cmbProveedores.SelectedValue = ds.Tables[0].Rows[0]["Proveedor"].ToString(); // "Proveedor" debe coincidir con la columna de tu DataSet
+            }
+
+
+
+            txtCodigo.Enabled = false;
+        }
+
+
+        private void CargarCategorias()
+
+        {
+            DataTable dtCategorias = objNegCategoria.ListadoCategorias(); // Método que obtiene los datos de la base de datos
+
+            cmbCategoria.DataSource = dtCategorias;
+            cmbCategoria.DisplayMember = "Nombre";  // Muestra el nombre de la categoría
+            cmbCategoria.ValueMember = "Nombre";   // Usa el nombre como valor
+            cmbCategoria.SelectedIndex = -1;       // Sin selección por defecto
+        }
+
+        private void CargarProveedores()
+
+        {
+            DataTable dtProveedores = objNegProveedores.ListadoProveedores(); // Obtener los proveedores desde la capa de negocio
+            cmbProveedores.DataSource = dtProveedores;
+            cmbProveedores.DisplayMember = "Nombre";  // Mostrar el nombre del proveedor
+            cmbProveedores.ValueMember = "Nombre";   // Usar el nombre del proveedor como valor
+            cmbProveedores.SelectedIndex = -1;       // Sin selección por defecto
+        }
+
+        
+        
+
+        private void AgregarCategoriaAlComboBox(Categoria categoria)
+        {
+            // Accede a la fuente de datos actual del ComboBox y agrega la nueva categoría
+            var dataSource = (List<Categoria>)cmbCategoria.DataSource;
+
+            if (dataSource != null)
+            {
+                dataSource.Add(categoria); // Agregar la nueva categoría a la lista
+                cmbCategoria.DataSource = null; // Resetear la fuente de datos
+                cmbCategoria.DataSource = dataSource; // Asignar la lista actualizada
+                cmbCategoria.DisplayMember = "CategNombre"; // Propiedad a mostrar
+                cmbCategoria.ValueMember = "CategoriaId";  // Propiedad oculta para el valor
+            }
+            else
+            {
+                MessageBox.Show("No se pudo actualizar el ComboBox, fuente de datos no inicializada.");
+            }
+        }
+        
+
+        
     }
-
-}
-
+}    

@@ -12,7 +12,13 @@ namespace Negocio
     
     public class NegocioProveedores
     {
-        
+        public DataTable ListadoProveedores()
+        {
+            DatosProveedores datosProveedores = new DatosProveedores();
+            return datosProveedores.ObtenerProveedores();
+        }
+
+
         // Atributo de tipo DatosProveedores para acceder a la capa de Datos
         DatosProveedores objDatosProveedores = new DatosProveedores();
 
