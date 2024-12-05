@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Data;
 using Datos;
 using Entidades;
@@ -15,9 +12,9 @@ namespace Negocio
         public DataTable ListadoProveedores()
         {
             DatosProveedores datosProveedores = new DatosProveedores();
-            return datosProveedores.ObtenerProveedores();
+            return datosProveedores.ListadoProveedores();
         }
-
+         
 
         // Atributo de tipo DatosProveedores para acceder a la capa de Datos
         DatosProveedores objDatosProveedores = new DatosProveedores();
@@ -41,21 +38,7 @@ namespace Negocio
             return objDatosProveedores.ListadoProveedores(id);
         }
 
-        // Método para eliminar un proveedor por Id
-        public bool EliminarProveedor(int id)
-        {
-            try
-            {
-                Proveedor proveedor = new Proveedor();
-                proveedor.Id = id;
-                int resultado = objDatosProveedores.AbmProveedor("Baja", proveedor);
-                return resultado > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar el proveedor", ex);
-            }
-        }
+        
 
         // Método de validación antes de agregar o modificar un proveedor
         public bool ValidarProveedor(Proveedor proveedor)

@@ -5,12 +5,8 @@ using Entidades;
 
 namespace Datos
 {
-   
-
     public class DatosProducto : DatosConexionBD
-
     {
-
         // Método para Alta, Baja y Modificación de productos
         public int AbmProducto(string accion, Producto objProducto)
         {
@@ -20,16 +16,17 @@ namespace Datos
             // Definir la consulta SQL en función de la acción solicitada
             if (accion == "Alta")
             {
-                orden = "INSERT INTO Productos (Codigo, Nombre, Precio, Categoria, Proveedor, Stock) VALUES " +
-                        "(@Codigo, @Nombre, @Precio, @Categoria, @Proveedor, @Stock)";
+                orden = "INSERT INTO Producto (Codigo, Nombre, Precio, Stock, Categoria_idCategoria, Proveedores_idProveedores) VALUES " +
+                        "(@Codigo, @Nombre, @Precio, @Stock, @Categoria_idCategoria, @Proveedores_idProveedores)";
             }
             else if (accion == "Modificar")
             {
-                orden = "UPDATE Productos SET Codigo=@Codigo , Nombre=@Nombre,Precio=@Precio, Categoria=@Categoria,Proveedor=@Proveedor, Stock=@Stock  WHERE Codigo=@Codigo";
+                orden = "UPDATE Producto SET Nombre=@Nombre, Precio=@Precio, Categoria_idCategoria=@Categoria_idCategoria, Proveedores_idProveedores=@Proveedores_idProveedores, Stock=@Stock " +
+                        "WHERE Codigo=@Codigo";
             }
             else if (accion == "Baja")
             {
-                orden = "DELETE FROM Productos WHERE Codigo=@Codigo and Nombre=@Nombre";
+                orden = "DELETE FROM Producto WHERE Codigo=@Codigo";
             }
 
             // Configuración del comando SQL
@@ -37,9 +34,9 @@ namespace Datos
             cmd.Parameters.AddWithValue("@Codigo", objProducto.Codigo);
             cmd.Parameters.AddWithValue("@Nombre", objProducto.Nombre);
             cmd.Parameters.AddWithValue("@Precio", objProducto.Precio);
-            cmd.Parameters.AddWithValue("@Categoria", objProducto.Categoria);
-            cmd.Parameters.AddWithValue("@Proveedor", objProducto.Proveedor);
             cmd.Parameters.AddWithValue("@Stock", objProducto.Stock);
+            cmd.Parameters.AddWithValue("@Categoria_idCategoria", objProducto.CategoriaId);
+            cmd.Parameters.AddWithValue("@Proveedores_idProveedores", objProducto.ProveedorId);
             
 
             try
@@ -67,9 +64,9 @@ namespace Datos
 
             // Definir la consulta SQL para listar productos en función del código o todos
             if (codigo != "Todos")
-                orden = "SELECT * FROM Productos"; 
+                orden = "SELECT p.Codigo, p.Nombre, p.Precio, p.Stock, c.Nombre AS Categoria, pr.Nombre AS Proveedor FROM Producto p JOIN Categoria c ON p.Categoria_idCategoria = c.IdCategoria JOIN Proveedores pr ON p.Proveedores_idProveedores = pr.IdProveedores;";
             else
-                orden = "SELECT * FROM Productos";
+                orden = "SELECT * FROM Producto";
 
             SqlCommand cmd = new SqlCommand(orden, conexion);
             if (codigo != "Todos")
@@ -96,5 +93,5 @@ namespace Datos
             return ds;
         }
     }
-
 }
+

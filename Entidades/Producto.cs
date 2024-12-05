@@ -12,11 +12,11 @@ namespace Entidades
         #region Atributos
         private string codigo;
         private string nombre;
-        private string categoria;
-        private string proveedor;
+       
         private int stock;
-        public decimal precio;
-
+        private decimal precio;
+        private int Categoria_idCategoria; // Clave foránea para Categoría
+        private int Proveedores_idProveedores; // Clave foránea para Proveedor
         #endregion
 
         #region Propiedades
@@ -37,25 +37,26 @@ namespace Entidades
             get { return precio; }
             set { precio = value; }
         }
-        public string Categoria
-        {
-            get { return categoria; }
-            set { categoria = value; }
-        }
 
-        public string Proveedor
-        {
-            get { return proveedor; }
-            set { proveedor = value; }
-        }
+        
+
         public int Stock
         {
             get { return stock; }
             set { stock = value; }
         }
 
-        
-        
+        public int CategoriaId
+        {
+            get { return Categoria_idCategoria; }
+            set { Categoria_idCategoria = value; }
+        }
+
+        public int ProveedorId
+        {
+            get { return Proveedores_idProveedores; }
+            set { Proveedores_idProveedores = value; }
+        }
         #endregion
 
         #region Constructores
@@ -63,21 +64,20 @@ namespace Entidades
         public Producto() { }
 
         // Constructor con parámetros
-        public Producto(string codigo, string nombre, decimal precio, string categoria, string proveedor, int stock)
+        public Producto(string codigo, string nombre, decimal precio, int stock, int categoriaId, int proveedorId)
         {
             this.codigo = codigo;
             this.nombre = nombre;
             this.precio = precio;
-            this.categoria = categoria;
-            this.proveedor = proveedor;
+          
             this.stock = stock;
-           
+            this.Categoria_idCategoria = categoriaId;
+            this.Proveedores_idProveedores = proveedorId;
         }
         #endregion
     }
 }
 
-      
 
 
 
@@ -85,4 +85,3 @@ namespace Entidades
 
 
 
-    

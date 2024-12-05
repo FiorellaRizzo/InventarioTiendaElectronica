@@ -9,8 +9,6 @@ using Entidades;
 
 namespace Negocio
 {
- 
-
     public class NegocioProducto
     {
         DatosProducto objDatosProducto = new DatosProducto();
@@ -34,19 +32,20 @@ namespace Negocio
             return objDatosProducto.ListadoProductos(codigo);
         }
 
-        // Método para eliminar un producto por Codigo
-        public bool EliminarProducto(string codigo, string nombre, int precio, int stock, string categoria, string proveedor)
+        // Método para eliminar un producto por sus propiedades
+        public bool EliminarProducto(string codigo, string nombre, int precio, int stock, int categoriaId, int proveedorId)
         {
             try
             {
-                Producto producto = new Producto();
-                producto.Codigo = codigo;
-                producto.Nombre = nombre;
-                producto.Precio = precio;
-                producto.Stock = stock;
-                producto.Categoria = categoria;
-                producto.Proveedor = proveedor;
-
+                Producto producto = new Producto
+                {
+                    Codigo = codigo,
+                    Nombre = nombre,
+                    Precio = precio,
+                    Stock = stock,
+                    CategoriaId = categoriaId,
+                    ProveedorId = proveedorId
+                };
 
                 int resultado = objDatosProducto.AbmProducto("Baja", producto);
                 return resultado > 0;
@@ -70,21 +69,19 @@ namespace Negocio
                 throw new ArgumentException("El nombre del producto no puede estar vacío.");
             }
 
-            if (string.IsNullOrWhiteSpace(producto.Categoria))
-            {
-                throw new ArgumentException("La categoria seleccionada no puede estar vacía.");
-            }
-
-            if (string.IsNullOrWhiteSpace(producto.Proveedor))
-            {
-                throw new ArgumentException("El proveedor seleccionado no puede estar vacío.");
-            }
-
-          
-
             if (producto.Stock < 0)
             {
                 throw new ArgumentException("El stock del producto no puede ser negativo.");
+            }
+
+            if (producto.CategoriaId <= 0)
+            {
+                throw new ArgumentException("El ID de la categoría debe ser un valor positivo.");
+            }
+
+            if (producto.ProveedorId <= 0)
+            {
+                throw new ArgumentException("El ID del proveedor debe ser un valor positivo.");
             }
 
             return true;

@@ -32,27 +32,16 @@ namespace Negocio
 
         // Método para obtener el listado de categorías
 
+
         public DataSet ListadoCategorias(string nombre)
         {
             return objDatosCategoria.ListadoCategorias(nombre);
         }
-       
 
-        // Método para eliminar una categoría por Id
-        public bool EliminarCategoria(int id)
-        {
-            try
-            {
-                Categoria categoria = new Categoria();
-                categoria.CategoriaId = id;
-                int resultado = objDatosCategoria.AbmCategoria("Baja", categoria);
-                return resultado > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar la categoría", ex);
-            }
-        }
+
+        
+
+        
 
         // Método de validación antes de agregar o modificar una categoría
         public bool ValidarCategoria(Categoria categoria)

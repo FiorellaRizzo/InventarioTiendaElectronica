@@ -14,9 +14,9 @@ namespace Datos
 
         public DataTable ListadoCategorias()
         {
-            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;"))
+            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaE;Integrated Security=True;"))
             {
-                string query = "SELECT Nombre FROM Categorias";
+                string query = "SELECT IdCategoria, Nombre FROM Categoria";
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
@@ -34,21 +34,21 @@ namespace Datos
             // Definir la consulta SQL en función de la acción solicitada
             if (accion == "Alta")
             {
-                orden = "INSERT INTO Categorias (Nombre) VALUES (@Nombre)";
+                orden = "INSERT INTO Categoria (Nombre) VALUES (@Nombre)";
             }
             else if (accion == "Modificar")
             {
-                orden = "UPDATE Categorias SET Nombre=@Nombre WHERE Id=@Id";
+                orden = "UPDATE Categoria SET Nombre=@Nombre WHERE IdCategoria=@IdCategoria";
             }
             else if (accion == "Baja")
             {
-                orden = "DELETE FROM Categorias WHERE Id=@Id";
+                orden = "DELETE FROM Categoria WHERE IdCategoria=@IdCategoria";
             }
 
             // Configuración del comando SQL
             SqlCommand cmd = new SqlCommand(orden, conexion);
             cmd.Parameters.AddWithValue("@Nombre", objCategoria.CategNombre);
-            cmd.Parameters.AddWithValue("@Id", objCategoria.CategoriaId);
+            cmd.Parameters.AddWithValue("@IdCategoria", objCategoria.CategoriaId);
 
             try
             {
@@ -69,19 +69,19 @@ namespace Datos
         }
 
         // Método para listar categorías
-        public DataSet ListadoCategorias(string id)
+        public DataSet ListadoCategorias(string nombre)
         {
             string orden = string.Empty;
 
             // Definir la consulta SQL para listar categorías en función del id o todas
-            if (id != "Todos")
-                orden = "SELECT * FROM Categorias WHERE Id = @Id";
+            if (nombre != "Todos")
+                orden = "SELECT * FROM Categoria WHERE Nombre = @Nombre";
             else
-                orden = "SELECT * FROM Categorias";
+                orden = "SELECT * FROM Categoria";
 
             SqlCommand cmd = new SqlCommand(orden, conexion);
-            if (id != "Todos")
-                cmd.Parameters.AddWithValue("@Id", int.Parse(id));
+            if (nombre != "Todos")
+               cmd.Parameters.AddWithValue("@Nombre", nombre);
 
             DataSet ds = new DataSet();
             SqlDataAdapter da = new SqlDataAdapter(cmd);

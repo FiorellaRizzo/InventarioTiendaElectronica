@@ -18,9 +18,7 @@ namespace Entidades
         // Constructor por defecto
         public Proveedor()
         {
-            id = 0;
-            nombre = string.Empty;
-            contacto = string.Empty;
+           
         }
 
         // Constructor con parámetros

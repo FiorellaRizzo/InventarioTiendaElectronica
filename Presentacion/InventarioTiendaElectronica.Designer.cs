@@ -198,6 +198,7 @@ namespace Presentacion
             this.cmbProveedores.Size = new System.Drawing.Size(258, 24);
             this.cmbProveedores.TabIndex = 11;
             this.cmbProveedores.UseWaitCursor = true;
+            this.cmbProveedores.SelectedIndexChanged += new System.EventHandler(this.cmbProveedores_SelectedIndexChanged_1);
             // 
             // dataGridView1
             // 

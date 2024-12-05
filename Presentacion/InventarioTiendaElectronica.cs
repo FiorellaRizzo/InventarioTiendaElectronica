@@ -293,8 +293,10 @@ namespace Presentacion
                 MessageBox.Show("No se pudo actualizar el ComboBox, fuente de datos no inicializada.");
             }
         }
-        
 
-        
+        private void cmbProveedores_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }    

@@ -11,8 +11,8 @@ namespace Datos
         public SqlConnection conexion;
 
         // Cadena de conexión - Actualiza "YourServerName" y "YourDatabaseName"
-        public string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;";
-        public string cadenaConexion2 = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Usuario\Desktop\InventarioTienda.mdf;Integrated Security = True; Connect Timeout = 30;";
+        public string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaE;Integrated Security=True;";
+        //public string cadenaConexion2 = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Usuario\Desktop\InventarioTienda.mdf;Integrated Security = True; Connect Timeout = 30;";
 
 
         // Constructor

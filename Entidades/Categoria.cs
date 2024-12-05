@@ -3,21 +3,21 @@
     public class Categoria
     {
         #region Atributos
-        private int Id; // Cambia "string" por un nombre válido
-        private string nombre;
+        private int IdCategoria; 
+        private string Nombre;
         #endregion
 
         #region Propiedades
         public int CategoriaId
         {
-            get { return Id; }
-            set { Id = value; }
+            get { return IdCategoria; }
+            set { IdCategoria = value; }
         }
 
         public string CategNombre
         {
-            get { return nombre; }
-            set { nombre = value; }
+            get { return Nombre; }
+            set { Nombre = value; }
         }
         #endregion
 
@@ -28,9 +28,9 @@
         }
 
         // Constructor con parámetros
-        public Categoria(int Id, string nombre)
+        public Categoria(int IdCategoria, string nombre)
         {
-            this.CategoriaId = Id; // Usar la propiedad en lugar de atributos directamente
+            this.CategoriaId = IdCategoria; // Usar la propiedad en lugar de atributos directamente
             this.CategNombre = nombre;
         }
         #endregion

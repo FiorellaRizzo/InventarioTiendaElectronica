@@ -10,12 +10,12 @@ namespace Datos
     public class DatosProveedores : DatosConexionBD
     {
 
-        public DataTable ObtenerProveedores()
+        public DataTable ListadoProveedores()
         {
             DataTable dtProveedores = new DataTable();
-            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaElectronica;Integrated Security=True;"))
+            using (SqlConnection conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=InventarioTiendaE;Integrated Security=True;"))
             {
-                string query = "SELECT Id, Nombre FROM Proveedores";
+                string query = "SELECT IdProveedores, Nombre, Contacto FROM Proveedores";
                 SqlCommand cmd = new SqlCommand(query, conexion);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
 
@@ -38,18 +38,18 @@ namespace Datos
             }
             else if (accion == "Modificar")
             {
-                orden = "UPDATE Proveedores SET Nombre=@Nombre, Contacto=@Contacto WHERE Id=@Id";
+                orden = "UPDATE Proveedores SET Nombre=@Nombre, Contacto=@Contacto WHERE IdProveedores=@IdProveedores";
             }
             else if (accion == "Baja")
             {
-                orden = "DELETE FROM Proveedores WHERE Id=@Id";
+                orden = "DELETE FROM Proveedores  WHERE IdProveedores=@IdProveedores";
             }
 
             // Configuración del comando SQL
             SqlCommand cmd = new SqlCommand(orden, conexion);
             cmd.Parameters.AddWithValue("@Nombre", objProveedor.Nombre);
             cmd.Parameters.AddWithValue("@Contacto", objProveedor.Contacto);
-            cmd.Parameters.AddWithValue("@Id", objProveedor.Id);
+            cmd.Parameters.AddWithValue("@IdProveedores", objProveedor.Id);
 
             try
             {
@@ -76,13 +76,13 @@ namespace Datos
 
             // Definir la consulta SQL para listar proveedores en función del id o todos
             if (id != "Todos")
-                orden = "SELECT * FROM Proveedores WHERE Id = @Id";
+                orden = "SELECT * FROM Proveedores WHERE IdProveedores = @IdProveedores";
             else
                 orden = "SELECT * FROM Proveedores";
 
             SqlCommand cmd = new SqlCommand(orden, conexion);
             if (id != "Todos")
-                cmd.Parameters.AddWithValue("@Id", int.Parse(id));
+                cmd.Parameters.AddWithValue("@IdProveedores", int.Parse(id));
 
             DataSet ds = new DataSet();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
